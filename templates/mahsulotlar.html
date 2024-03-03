@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block bolim %}  {{ user.bolim }} {% endblock %}
+{% block username %} {{ user.first_name }} {{ user.last_name }} {% endblock %}
+{% block mahsulotlar_active %} active {% endblock %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Mahsulotlar</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/user/logout/">Logout</a></li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <div class="col-md-12">
+            <div class="card card-dark">
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Mahsulot qo'shish
+                        </button>
+                        <form method="get">
+                            {% csrf_token %}
+                            <input id="search" name="search">
+                            <button class="btn btn-primary" id="search">Qidirish</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table" style="text-align: center;">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="width: 15px">T/r</th>
+                            <th scope="col" style="width: 255px; text-align: center;">Nomi</th>
+                            <th scope="col" style="text-align: center;">Brendi</th>
+                            <th scope="col" style="text-align: center;">Narxi</th>
+                            <th scope="col" style="text-align: center;">Miqdori</th>
+                            <th scope="col" style="text-align: center;">Kelgan sana</th>
+                            <th scope="col" style="text-align: center;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for mahsulot in mahsulotlar %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ mahsulot.nom }}</td>
+                                <td>{{ mahsulot.brend }}</td>
+                                <td>{{ mahsulot.narx }} so'm</td>
+                                <td>{{ mahsulot.miqdor }} {{ mahsulot.olchov }}</td>
+                                <td>{{ mahsulot.kelgan_sana }}</td>
+                                <td>
+                                    <a href="/mahsulotlar/{{ mahsulot.id }}/tahrirlash/">
+                                        <button type="submit" class="btn btn-warning" data-toggle="modal">Tahrirlash</button>
+                                    </a>
+
+                                    <a href="/mahsulotlar/{{ mahsulot.id }}/o'chirish/">
+                                        <button type="submit" class="btn btn-danger" data-toggle="modal">O'chirish</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header bg-dark">
+                        <h4 class="modal-title">Yangi mahsulot</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <label for="new-product-name">Nomi:</label>
+                            <input type="text" name="nom" placeholder="Mahsulot nomi..." class="form-control" required>
+                            <br>
+                            <label for="new-product-name">Brend:</label>
+                            <input type="text" name="brend" placeholder="Mahsulot brendi..." class="form-control"
+                                   required>
+                            <br>
+                            <label for="new-product-name">Narxi:</label>
+                            <input type="text" name="narx" placeholder="Mahsulot narxi..." class="form-control"
+                                   required>
+                            <br>
+                            <label for="new-product-name">Miqdori:</label>
+                            <input type="number" name="miqdor" placeholder="Mahsulot miqdori..." class="form-control"
+                                   required>
+                            <br>
+                            <label for="new-product-name">O'lchov:</label>
+                            <input type="text" name="olchov" placeholder="Mahsulot o'lchovi..." class="form-control"
+                                   required>
+                            <br>
+                            <label for="new-product-name">Sana:</label>
+                            <input type="date" name="kelgan_sana" placeholder="Kelgan sanasi..." class="form-control"
+                                   required>
+                            <br>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Qo`shish</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Yopish</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sections</title>
+	<style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+		header{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px 40px;
+			background-color: #353942;
+			color: #fff;
+		}
+		.button-container{
+			padding: 0 5.1vw;
+			display: flex;
+            flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			height: 400px;
+		}
+        
+		.button{
+			width: 30vw;
+			height: 15vh;
+			background-color: #353942;
+			color: #fff;
+			font-size: 24px;
+			margin: 100px 30px 20px 30px;
+			border-radius: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-decoration: none;
+		}
+
+        .button:hover {
+            box-shadow: 0 0 15px 3px #bec2cc;
+            color: #353942;
+            background-color: #fff;
+            border: 1px solid #353942;
+        }
+
+        nav {
+            display: flex;
+            gap: 50px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Bo'limlar</h1>
+		<nav>
+			<a href="/mahsulotlar/">Mahsulotlar</a>
+			<a href="/mijozlar/">Mijozlar</a>
+			<a href="'/statistika/">Statistika</a>
+			<a href="/admin/">Admin</a>
+		</nav>
+	</header>
+	<main>
+		<div class="button-container">
+			<a href="/mahsulotlar/" class="button">Mahsulotlar</a>
+			<a href="/mijozlar/" class="button">Mijozlar</a>
+			<a href="/statistika/" class="button">Statistika</a>
+			<a href="/admin/" class="button">Admin</a>
+		</div>
+	</main>
+</body>
+</html>

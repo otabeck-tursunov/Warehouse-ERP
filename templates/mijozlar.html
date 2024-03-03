@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block bolim %}  {{ user.bolim }} {% endblock %}
+{% block username %} {{ user.first_name }} {{ user.last_name }} {% endblock %}
+{% block mijozlar_active %} active {% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Mijozlar</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/logout/">Logout</a></li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <div class="col-md-12">
+            <div class="card card-dark">
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Mijoz qo'shish
+                        </button>
+                        <form method="get">
+                            {% csrf_token %}
+                            <input id="search" name="search">
+                            <button class="btn btn-primary" id="search">Qidirish</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table" style="text-align: center;">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="width: 15px">T/r</th>
+                            <th scope="col" style="width: 255px; text-align: center;">FIO</th>
+                            <th scope="col" style="text-align: center;">Do'kon nomi</th>
+                            <th scope="col" style="text-align: center;">Telefon raqami</th>
+                            <th scope="col" style="text-align: center;">Manzili</th>
+                            <th scope="col" style="text-align: center;">Qarzi</th>
+                            <th scope="col" style="text-align: center;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for mijoz in mijozlar %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}.</th>
+                                <td>{{ mijoz.ism }}</td>
+                                <td>{{ mijoz.dokon }}</td>
+                                <td>{{ mijoz.tel }}</td>
+                                <td>{{ mijoz.manzil }}</td>
+                                <td>{{ mijoz.qarz }}</td>
+                                <td>
+                                    <a href="/mijozlar/{{ mijoz.id }}/tahrirlash/">
+                                        <button type="submit" class="btn btn-warning" data-toggle="modal">Tahrirlash</button>
+                                    </a>
+                                    <a href="/mijozlar/{{ mijoz.id }}/o'chirish/">
+                                        <button type="submit" class="btn btn-danger" data-toggle="modal">O'chirish</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header bg-dark">
+                        <h4 class="modal-title">Yangi mijoz</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <label for="new-product-name">FIO:</label>
+                            <input type="text" name="ism" placeholder="Mijoz to'liq ismi..." class="form-control"
+                                   required>
+                            <br>
+                            <label for="new-product-name">Do'kon nomi:</label>
+                            <input type="text" name="dokon" placeholder="Do'kon nomi..." class="form-control"
+                                   required>
+                            <br>
+                            <label for="new-product-name">Telefon raqami:</label>
+                            <input type="text" name="tel" placeholder="Telefon raqami..." class="form-control"
+                                   required>
+                            <br>
+                            <label for="new-product-name">Manzili:</label>
+                            <input type="text" name="manzil" placeholder="Mijoz manzili..." class="form-control"
+                                   required>
+                            <br>
+                            <label for="new-product-name">Qarzi:</label>
+                            <input type="number" name="qarz" value=0 class="form-control">
+                            <br>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Qo`shish</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Yopish</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
