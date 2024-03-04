@@ -25,10 +25,18 @@
         <div class="col-md-12">
             <div class="card card-dark">
                 <div class="card-header border-0">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                             Sotuv qo'shish
                         </button>
+                        <h5>Summa: {{ summa }} so'm</h5>
+                        <h5>Qarz: {{ qarz }} so'm</h5>
+
+                        <form method="get">
+                            {% csrf_token %}
+                            <input id="search" name="search">
+                            <button class="btn btn-primary" id="search">Qidirish</button>
+                        </form>
                     </div>
                 </div>
                 <div class="card-body">
@@ -48,7 +56,7 @@
                         <tbody>
                         {% for sotuv in sotuvlar %}
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">{{ forloop.counter }}.</th>
                                 <td>{{ sotuv.mahsulot.nom }}, {{ sotuv.mahsulot.brend }}</td>
                                 <td>{{ sotuv.mijoz.ism }}, {{ sotuv.mijoz.dokon }}</td>
                                 <td>{{ sotuv.sana }}</td>
@@ -57,11 +65,11 @@
                                 <td>{{ sotuv.tolandi }} so'm</td>
                                 <td>{{ sotuv.qarz }} so'm</td>
                                 <td>
-                                    <a href="/sotuvlar/{{ sotuv.id }}/tahrirlash/">
+                                    <a href="/statistika/{{ sotuv.id }}/tahrirlash/">
                                         <button type="submit" class="btn btn-warning" data-toggle="modal">Tahrirlash
                                         </button>
                                     </a>
-                                    <a href="/sotuvlar/{{ sotuv.id }}/o'chirish/">
+                                    <a href="/statistika/{{ sotuv.id }}/o'chirish/">
                                         <button type="submit" class="btn btn-danger" data-toggle="modal">O'chirish
                                         </button>
                                     </a>
@@ -89,28 +97,26 @@
                     <form method="post">{% csrf_token %}
                         <div class="modal-body">
                             <label for="mahsulot">Mahsulot:</label>
-                            <select id="mahsulot" name="mahsulot" value="{{ mahsulot.id }}">
+                            <select id="mahsulot" name="mahsulot" class="form-control">
                                 {% for mahsulot in mahsulotlar %}
-                                    <option> {{ mahsulot.brend }}: {{ mahsulot.nom }} </option>
+                                    <option value="{{ mahsulot.id }}"> {{ mahsulot.brend }}: {{ mahsulot.nom }} </option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                            <label for=" mijoz">Mijoz:</label>
+                            <select id="mijoz" name="mijoz" class="form-control">
+                                {% for mijoz in mijozlar %}
+                                    <option value="{{ mijoz.id }}"> {{ mijoz.dokon }}: {{ mijoz.ism }} </option>
                                 {% endfor %}
                             </select>
                             <br>
                             <label for="miqdor">Miqdor:</label>
                             <input type="number" name="miqdor" placeholder="Miqdor kiriting ..." id="miqdor"
-                                   class="form-control"
-                                   required>
-                            <br>
-                            <label for="mijoz">Mijoz:</label>
-                            <select id="mijoz" name="mijoz" value="{{ mijoz.id }}">
-                                {% for mijoz in mijozlar %}
-                                    <option> {{ mijoz.dokon }}: {{ mijoz.ism }} </option>
-                                {% endfor %}
-                            </select>
+                                   class="form-control" required>
                             <br>
                             <label for="sana">Sana:</label>
-                            <input type="datetime-local" name="sana" placeholder="Sana ..." id="sana"
-                                   class="form-control"
-                                   required>
+                            <input type="date" name="sana" placeholder="Sana ..." id="sana"
+                                   class="form-control" required>
                             <br>
                             <label for="umumiy_summa">Jami summa:</label>
                             <input type="number" name="summa" placeholder="Jami summa ..." id="umumiy_summa"

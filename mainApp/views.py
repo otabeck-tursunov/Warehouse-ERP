@@ -13,7 +13,7 @@ class BolimlarView(View):
 class MahsulotlarView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            mahsulotlar = Mahsulot.objects.filter(tarqatuvchi=request.user)
+            mahsulotlar = Mahsulot.objects.filter(tarqatuvchi=request.user).order_by('kelgan_sana')
             if request.GET.get('search'):
                 mahsulotlar = mahsulotlar.filter(nom__icontains=request.GET.get('search')) | mahsulotlar.filter(
                     brend__icontains=request.GET.get('search'))
@@ -65,7 +65,7 @@ class MahsulotEditView(View):
 class MijozlarView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            mijozlar = Mijoz.objects.all()
+            mijozlar = Mijoz.objects.all().order_by('-id')
             if request.GET.get('search'):
                 mijozlar = (
                         mijozlar.filter(ism__icontains=request.GET.get('search')) |

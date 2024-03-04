@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import *
 
-
 urlpatterns = [
-    path('', SotuvlarView.as_view(), name='sotuvlar'),
+    path('', StatistikaView.as_view(), name='statistika'),
+    path('<int:pk>/tahrirlash/', SotuvEditView.as_view(), name='sotuv-edit'),
+    path('<int:pk>/o\'chirish/', SotuvDeleteView.as_view(), name='sotuv-delete'),
 ]
